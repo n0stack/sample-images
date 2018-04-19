@@ -1,0 +1,37 @@
+{
+  "builders":
+  [
+    {
+      "type": "qemu",
+      "iso_url": "http://cloud-images.ubuntu.com/daily/server/xenial/current/xenial-server-cloudimg-amd64-disk1.img",
+      "iso_checksum_url": "http://cloud-images.ubuntu.com/daily/server/xenial/current/SHA256SUMS",
+      "iso_checksum_type": "sha256",
+      "disk_image": true,
+      "output_directory": "output",
+      "disk_size": 5000,
+      "format": "qcow2",
+      "disk_compression": true,
+      "headless": false,
+      "accelerator": "kvm",
+      "ssh_username": "ubuntu",
+      "ssh_password": "ubuntu",
+      "ssh_port": 22,
+      "ssh_wait_timeout": "300s",
+      "vm_name": "ubuntu",
+      "use_default_display": true,
+      "qemuargs": [
+        ["-m", "1024M"],
+        ["-fda", "cloudinit/cloud.img"],
+        ["-display", "sdl"]
+      ]
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "shell",
+      "inline": [
+        "sudo apt-get remove -y cloud-init"
+      ]
+    }
+  ]
+}
